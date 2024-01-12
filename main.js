@@ -57,16 +57,65 @@ function pAequorFactory(number, arr) {
       let getNum2 = anotherObject.specimenNum;
 
       return 'specimen #' + getNum1 + ' and specimen #' + getNum2 + ' have ' + getPercent + '% DNA in common'
+    },
+    willLikelySurvive() {
+      let arr = this.dna;
+      let count = 0;
+      for (let i = 0; i < arr.length; i++) {
+        let letter = arr[i];
+        if (letter === 'C' || letter === 'G'){
+          count++;
+        }
+      }
+      if (count >= 9) {
+        return true
+      }
+      return false;
+    },
+    complementStrand() {
+      let takeArr = this.dna;
+      console.log(takeArr);
+      let complementArr = [];
+      for (let i = 0; i < takeArr.length; i++) {
+        let knowLetter = takeArr[i];
+        if (knowLetter === 'A') {
+          complementArr.push('T')
+        } else if (knowLetter === 'T') {
+          complementArr.push('A')
+        } else if (knowLetter === 'C') {
+          complementArr.push('G')
+        } else if (knowLetter === 'G') {
+          complementArr.push('C')
+        };
+      };
+      return complementArr;
     }
   };
   return result
 };
 
+function create30Inst () {
+  let theArr = []
+  let count = 0;
+  let numberOfAequor = 0
+  while (count <= 30) {
+    let getTheStrand = mockUpStrand();
+    let runTheFactory = pAequorFactory(numberOfAequor, getTheStrand);
+    let isTrue = runTheFactory.willLikelySurvive()
+    if (isTrue === true) {
+      theArr.push(runTheFactory);
+      count++;
+      numberOfAequor++;
+    };
+  };
+  return theArr
+}
+
 let getArr = mockUpStrand();
 let getArr2 = mockUpStrand();
 let randomDNA = pAequorFactory(23, getArr);
 let randomDNA2 = pAequorFactory(65, getArr2)
-console.log(randomDNA2.compareDNA(randomDNA))
+console.log(randomDNA.complementStrand())
 
 
 
